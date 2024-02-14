@@ -1,0 +1,8 @@
+[project]
+name = "aria_tools"
+version = "0.1"
+dependencies = [
+    "requests>=2.31.0",
+    "pandas>=2.1.4",
+    "paho-mqtt>=1.6.1"
+]
