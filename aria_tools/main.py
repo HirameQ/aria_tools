@@ -88,9 +88,38 @@ class AriaTools:
         else:
             return response.text
 
-    # サーバーからダウンロードして、Pandasデータとして返します
+    # サーバーからダウンロードして、バイナリデータとして返します
     #
     # path: ダウンロード先を指定します　例　/csv
+    # file_name: ファイル名を指定します　例　aria.tif
+    def get_server_binary(self, path: string, file_name: string):
+        # GETリクエストを送信してファイルをダウンロードする
+        response = requests.get(
+            self.__file_domain +
+            add_beginning(remove_trailing(path, "/"), "/") +
+            "/" + file_name,
+        )
+        if response.status_code != 200:
+            return None
+        else:
+            return response.content
+
+    # サーバーからエクセルファイルをダウンロードして、Pandasデータとして返します
+    #
+    # path: ダウンロード先を指定します　例　/csv
+    # file_name: ファイル名を指定します　例　aria.xlsx
+    # sheet_name: シート名を指定します　例　aria
+    def get_server_excel_pandas(self, path: string, file_name: string, sheet_name: string):
+        response = self.get_server_binary(path, file_name)
+        if response is not None:
+            return pandas.read_excel(io.BytesIO(response), sheet_name)
+        else:
+            return None
+
+    # サーバーからCSVのファイルをダウンロードして、Pandasデータとして返します
+    #
+    # path: ダウンロード先を指定します　例　/csv
+    # file_name: ファイル名を指定します　例　aria.e
     # file_name: ファイル名を指定します　例　aria.csv
     def get_server_csv_pandas(self, path: string, file_name: string):
         response = self.get_server_csv(path, file_name)

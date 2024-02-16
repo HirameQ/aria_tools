@@ -1,4 +1,6 @@
 # 解析ツールの使用方法
+2_シミュレーションデータと観測値のデータ整形_田代先生&観測
+20171021-1026観測結果_編集.xlsx
 
 ## インストール
 
@@ -97,7 +99,7 @@ file_name: ファイル名を指定します　例　aria.csv
 
 文字列データをMQTTの指定されたトピックに送信します
 
-path: 保存先を指定します　例　/stat/send
+topic: トピックを指定します　例　/stat/send
 data_string: 送信するデータ
 
 `save_mqtt_string(self, topic: string, data_string: string)`
@@ -106,7 +108,7 @@ data_string: 送信するデータ
 
 PandasデータをJSONにしてMQTTの指定されたトピックに送信します
 
-path: 保存先を指定します　例　/stat/send
+topic: トピックを指定します　例　/stat/send
 pandas_data: 保存するデータ
 
 `save_mqtt_pandas(self, topic: string, pandas_data: pandas)`
@@ -115,7 +117,7 @@ pandas_data: 保存するデータ
 
 MQTTの指定されたトピックを指定された個数受信して、CSVの文字列データとして返します
 
-path: ダウンロード先を指定します　例　/stat/send
+topic: トピックを指定します　例　/stat/send
 msg_count: 取得したいデータ数を指定します
 
 `get_mqtt_string(self, topic: string, msg_count: int = 1)`
@@ -124,7 +126,38 @@ msg_count: 取得したいデータ数を指定します
 
 MQTTの指定されたトピックを指定された個数受信して、Pandasデータとして返します
 
-path: ダウンロード先を指定します　例　/stat/send
+topic: トピックを指定します　例　/stat/send
 msg_count: 取得したいデータ数を指定します
 
 `get_mqtt_pandas(self, topic: string, msg_count: int = 1)`
+
+
+### `get_server_binary`
+
+サーバから指定されたファイルをダウンロードし、バイナリデータとして返します
+
+path: ダウンロード先を指定します　例　/csv
+file_name: ファイル名を指定します　例　aria.xlsx
+
+`get_server_binary(self, topic: string, file_name: string)`
+
+### `get_server_excel_pandas`
+
+サーバーからエクセルファイルをダウンロードして、Pandasデータとして返します
+
+path: ダウンロード先を指定します　例　/csv
+file_name: ファイル名を指定します　例　aria.xlsx
+sheet_name: シート名を指定します　例　aria
+
+
+`get_server_excel_pandas(self, path: string, file_name: string, sheet_name: string)`
+
+
+
+## 開発用
+
+下記のコマンドを実行することで開発しやすくなります
+
+```commandline
+pip install -e .
+```
